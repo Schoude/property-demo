@@ -1,9 +1,10 @@
+import "https://deno.land/x/dotenv/load.ts";
+
 // Standard Library
 export { blue, green } from "https://deno.land/std@0.103.0/fmt/colors.ts";
 export { parse } from "https://deno.land/std@0.103.0/flags/mod.ts";
 
 // Dotenv
-import "https://deno.land/x/dotenv@v2.0.0/load.ts";
 
 // Oak
 export {
