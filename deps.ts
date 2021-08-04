@@ -3,7 +3,7 @@ export { blue, green } from "https://deno.land/std@0.103.0/fmt/colors.ts";
 export { parse } from "https://deno.land/std@0.103.0/flags/mod.ts";
 
 // Dotenv
-export { config } from "https://deno.land/x/dotenv@v2.0.0/mod.ts";
+import "https://deno.land/x/dotenv@v2.0.0/load.ts";
 
 // Oak
 export {
