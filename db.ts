@@ -1,3 +1,4 @@
+import "https://deno.land/x/dotenv/load.ts";
 import { MongoClient } from "./deps.ts";
 
 const client = new MongoClient();
