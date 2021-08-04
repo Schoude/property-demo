@@ -1,7 +1,20 @@
 import { db } from "./db.ts";
-import { Application, blue, green, oakCors, Router, Status } from "./deps.ts";
+import {
+  Application,
+  blue,
+  green,
+  oakCors,
+  parse,
+  Router,
+  Status,
+} from "./deps.ts";
 
 const app = new Application();
+
+const { args } = Deno;
+const DEFAULT_PORT = 8000;
+const argPort = parse(args).port;
+
 app.addEventListener("listen", ({ hostname, port, secure }) => {
   console.log(
     `${blue("Listening on:")} ${green(secure ? "https://" : "http://")}${
@@ -49,4 +62,4 @@ router.get("/owwerchecker", (ctx) => {
 app.use(router.allowedMethods());
 app.use(router.routes());
 
-await app.listen({ port: 8080 });
+await app.listen({ port: argPort ? Number(argPort) : DEFAULT_PORT });
