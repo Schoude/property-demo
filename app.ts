@@ -1,15 +1,8 @@
-// <reference path="https://raw.githubusercontent.com/denoland/deployctl/main/types/deploy.fetchevent.d.ts" />
-// <reference path="https://raw.githubusercontent.com/denoland/deployctl/main/types/deploy.ns.d.ts" />
-// <reference path="https://raw.githubusercontent.com/denoland/deployctl/main/types/deploy.window.d.ts" />
-
-import {
-  Application,
-  Router,
-  Status,
-} from "https://deno.land/x/oak@v7.7.0/mod.ts";
-import { oakCors } from "https://deno.land/x/cors@v1.2.2/mod.ts";
+import { db } from "./db.ts";
+import { Application, oakCors, Router, Status } from "./deps.ts";
 
 const app = new Application();
+const units = db.collection("units");
 
 app.use(
   oakCors({
@@ -21,57 +14,25 @@ app.use(
 const router = new Router();
 
 router.get("/", (ctx) => {
-  const units = [
-    {
-      name: "1.0.1",
-      areaSize: 65,
-      numberOfRooms: 3,
-      basePrice: 400000,
-    },
-    {
-      name: "1.0.2",
-      areaSize: 45,
-      numberOfRooms: 2,
-      basePrice: 300000,
-    },
-    {
-      "name": "1.0.3",
-      "areaSize": 98,
-      "numberOfRooms": 4,
-      "basePrice": 530000,
-    },
-    {
-      name: "1.1.1",
-      areaSize: 52,
-      numberOfRooms: 3,
-      basePrice: 230000,
-    },
-    {
-      name: "1.1.2",
-      areaSize: 85,
-      numberOfRooms: 4,
-      basePrice: 450000,
-    },
-    {
-      name: "1.1.3",
-      areaSize: 120,
-      numberOfRooms: 5,
-      basePrice: 750000,
-    },
-  ];
-  ctx.response.body = units;
+  ctx.response.body = {
+    message: "Hello World!",
+  };
+  ctx.response.status = Status.OK;
+});
+
+router.get("/property", async (ctx) => {
+  try {
+    const unitsCursor = units.find({}, { noCursorTimeout: false });
+    ctx.response.body = await unitsCursor.toArray();
+    ctx.response.status = Status.OK;
+  } catch (_) {
+    ctx.response.status = Status.InternalServerError;
+  }
 });
 
 router.get("/owwerchecker", (ctx) => {
   ctx.response.body = {
     owwerchecker: "https://youtu.be/KTK6y7lMAWE",
-  };
-  ctx.response.status = Status.OK;
-});
-
-router.get("/test", (ctx) => {
-  ctx.response.body = {
-    message: "test",
   };
   ctx.response.status = Status.OK;
 });
