@@ -1,7 +1,16 @@
 import { db } from "./db.ts";
-import { Application, oakCors, Router, Status } from "./deps.ts";
+import { Application, blue, green, oakCors, Router, Status } from "./deps.ts";
 
 const app = new Application();
+app.addEventListener("listen", ({ hostname, port, secure }) => {
+  console.log(
+    `${blue("Listening on:")} ${green(secure ? "https://" : "http://")}${
+      green(
+        hostname ?? "localhost",
+      )
+    }:${green(`${port}`)}`,
+  );
+});
 const units = db.collection("units");
 
 app.use(
@@ -40,4 +49,4 @@ router.get("/owwerchecker", (ctx) => {
 app.use(router.allowedMethods());
 app.use(router.routes());
 
-addEventListener("fetch", app.fetchEventHandler());
+await app.listen({ port: 8080 });
