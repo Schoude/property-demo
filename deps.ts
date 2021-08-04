@@ -1,4 +1,4 @@
-import "https://deno.land/x/dotenv/load.ts";
+import "https://deno.land/x/dotenv@v2.0.0/load.ts";
 
 // Standard Library
 export { blue, green } from "https://deno.land/std@0.103.0/fmt/colors.ts";
