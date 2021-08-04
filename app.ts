@@ -1,4 +1,4 @@
-// import { db } from "./db.ts";
+import { db } from "./db.ts";
 import {
   Application,
   blue,
@@ -24,7 +24,7 @@ app.addEventListener("listen", ({ hostname, port, secure }) => {
     }:${green(`${port}`)}`,
   );
 });
-// const units = db.collection("units");
+const units = db.collection("units");
 
 app.use(
   oakCors({
@@ -42,15 +42,15 @@ router.get("/", (ctx) => {
   ctx.response.status = Status.OK;
 });
 
-// router.get("/property", async (ctx) => {
-//   try {
-//     const unitsCursor = units.find({}, { noCursorTimeout: false });
-//     ctx.response.body = await unitsCursor.toArray();
-//     ctx.response.status = Status.OK;
-//   } catch (_) {
-//     ctx.response.status = Status.InternalServerError;
-//   }
-// });
+router.get("/property", async (ctx) => {
+  try {
+    const unitsCursor = units.find({}, { noCursorTimeout: false });
+    ctx.response.body = await unitsCursor.toArray();
+    ctx.response.status = Status.OK;
+  } catch (_) {
+    ctx.response.status = Status.InternalServerError;
+  }
+});
 
 router.get("/owwerchecker", (ctx) => {
   ctx.response.body = {
