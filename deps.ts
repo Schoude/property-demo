@@ -1,5 +1,5 @@
 // Dotenv
-export { config } from "https://deno.land/x/dotenv@v2.0.0/mod.ts";
+export * from "https://deno.land/x/dotenv@v2.0.0/load.ts";
 
 // Oak
 export {
